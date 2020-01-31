@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  rpgd-db:
+    image: postgres:12-alpine
+    container_name: rpgd-db-dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - rpgd-db-vol:/var/lib/postgresql/data
+
+  rpgd-api:
+    build: .
+    image: rpgd-api:latest
+    container_name: rpgd-api
+    environment:
+      - DB_USER=postgres
+      - DB_CONNECTION_STRING=jdbc:postgresql://rpgd-db-dev:5432/rpgd-dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rpgd-db
+
+volumes:
+  rpgd-db-vol:
+
+networks:
+  default:
+    external:
+      name: rpgd-net
