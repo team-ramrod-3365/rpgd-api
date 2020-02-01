@@ -32,18 +32,32 @@ public class Weapon {
     }
 
     public void validate() throws WeaponsException {
+        validateName();
+        validateType();
         validateAttackPower();
         validateWeight();
     }
 
+    private void validateName() throws WeaponsException {
+        if(this.name == null) {
+            throw new WeaponsException("The name attribute is a required field when creating a weapon.");
+        }
+    }
+
+    private void validateType() throws WeaponsException {
+        if(this.type == null) {
+            throw new WeaponsException("The type attribute is a required field when creating a weapon.");
+        }
+    }
+
     private void validateAttackPower() throws WeaponsException {
-        if(this.attackPower < 0.0) {
+        if(this.attackPower != null && this.attackPower < 0.0) {
             throw new WeaponsException("The attackPower attribute must be greater than or equal to 0.0.");
         }
     }
 
     private void validateWeight() throws WeaponsException {
-        if(this.weight < 0.0) {
+        if(this.weight != null && this.weight < 0.0) {
             throw new WeaponsException("The weight attribute must be greater than or equal to 0.0.");
         }
     }
@@ -114,6 +128,10 @@ public class Weapon {
         public WeaponBuilder weight(Double weight) {
             this.weight = weight;
             return this;
+        }
+
+        public Weapon build() {
+            return new Weapon(this);
         }
     }
 }
