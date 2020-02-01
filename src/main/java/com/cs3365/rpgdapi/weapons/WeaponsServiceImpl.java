@@ -3,6 +3,8 @@ package com.cs3365.rpgdapi.weapons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class WeaponsServiceImpl implements WeaponsService {
 
@@ -14,9 +16,16 @@ public class WeaponsServiceImpl implements WeaponsService {
     }
 
     @Override
-    public void createWeapon(Weapon requestBody) throws WeaponsException {
-        WeaponEntity weapon = new WeaponEntity();
+    public UUID createWeapon(Weapon requestBody) throws WeaponsException {
+        WeaponEntity weapon = new WeaponEntity(requestBody);
+        WeaponEntity createdWeapon;
 
-        weaponsRepository.save(weapon);
+        try {
+            createdWeapon = weaponsRepository.save(weapon);
+        } catch(Exception e) {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+
+        return createdWeapon.getId();
     }
 }

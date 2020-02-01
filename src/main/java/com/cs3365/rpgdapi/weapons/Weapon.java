@@ -31,6 +31,23 @@ public class Weapon {
         this.weight = builder.weight;
     }
 
+    public void validate() throws WeaponsException {
+        validateAttackPower();
+        validateWeight();
+    }
+
+    private void validateAttackPower() throws WeaponsException {
+        if(this.attackPower < 0.0) {
+            throw new WeaponsException("The attackPower attribute must be greater than or equal to 0.0.");
+        }
+    }
+
+    private void validateWeight() throws WeaponsException {
+        if(this.weight < 0.0) {
+            throw new WeaponsException("The weight attribute must be greater than or equal to 0.0.");
+        }
+    }
+
     public String getName() {
         return name;
     }

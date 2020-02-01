@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/weapons")
@@ -23,13 +24,25 @@ public class WeaponsController {
     @PostMapping
     public ResponseEntity<String> post(@RequestBody Weapon requestBody) {
         try {
-            weaponsService.createWeapon(requestBody);
+            requestBody.validate();
         } catch(WeaponsException e) {
             return ResponseEntity.badRequest()
                                  .body(e.getMessage());
         }
 
-        URI location = URI.create("https://localhost:8080/weapons/1234567");
+        UUID weaponId;
+        String baseUrl = "";
+
+        try {
+            weaponId = weaponsService.createWeapon(requestBody);
+        } catch(WeaponsException e) {
+            return ResponseEntity.badRequest()
+                                 .body(String.format(
+                                         "There was an issue creating the weapon in the database: %s",
+                                         e.getMessage()));
+        }
+
+        URI location = URI.create(String.format("%s/%s", baseUrl, weaponId.toString()));
 
         return ResponseEntity.created(location)
                              .body("");

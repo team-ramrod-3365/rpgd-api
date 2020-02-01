@@ -3,9 +3,11 @@ package com.cs3365.rpgdapi.weapons;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
+@Table(name = "weapons")
 public class WeaponEntity {
 
     @Id
@@ -19,6 +21,18 @@ public class WeaponEntity {
     private String attackType;
     private String specialAbility;
     private Double weight;
+
+    public WeaponEntity() {}
+
+    public WeaponEntity(Weapon weapon) {
+        this.name = weapon.getName();
+        this.type = weapon.getType();
+        this.description = weapon.getDescription();
+        this.attackPower = weapon.getAttackPower();
+        this.attackType = weapon.getAttackType();
+        this.specialAbility = weapon.getSpecialAbility();
+        this.weight = weapon.getWeight();
+    }
 
     public UUID getId() {
         return id;

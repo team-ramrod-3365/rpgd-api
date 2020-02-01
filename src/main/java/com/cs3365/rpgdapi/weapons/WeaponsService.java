@@ -1,5 +1,7 @@
 package com.cs3365.rpgdapi.weapons;
 
+import java.util.UUID;
+
 public interface WeaponsService {
-    void createWeapon(Weapon requestBody) throws WeaponsException;
+    UUID createWeapon(Weapon requestBody) throws WeaponsException;
 }
