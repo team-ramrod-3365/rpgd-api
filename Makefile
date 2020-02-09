@@ -10,6 +10,6 @@ docker-up:
 	docker-compose up -d
 
 test:
-	gradle cleanTest test integration
+	./gradlew cleanTest test
 
 rebuild: build-jar docker-build docker-up

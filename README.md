@@ -29,3 +29,21 @@ If you are using an IDE to run your application, you will need to set these envi
 
 ## Contributing
 Please follow the [AngularJS commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) when committing code to the project.
+
+All code changes need to be made on a separate branch following a naming convention of `CS3365-<summary-of-changes>`. In order to create a branch, use the following command:
+```
+git checkout -b CS3365-<summary-of-changes>
+```
+
+You can push these changes to GitHub with these commands:
+```
+git add .
+git commit -am "<change-type>(<thing-changed>): <brief summary of changes>"
+git push -u origin CS3365-<summary-of-changes>
+```
+
+Once you have pushed once with the arguments `-u origin CS3365-<summary-of-changes>`, you can just use `git push` from that point forward.
+
+All code changes must go through a pull request process with at least one approver from the team. Written code must be tested, even if the tests are sparse.
+
+In order to run the tests, use the command `make test` if on Linux or Mac OS X, or `./gradlew.bat cleanTest test` if on Windows.
