@@ -4,4 +4,5 @@ import java.util.UUID;
 
 public interface WeaponsService {
     UUID createWeapon(Weapon requestBody) throws WeaponsException;
+    WeaponEntity findWeapon(UUID identity) throws WeaponsException;
 }
