@@ -60,7 +60,7 @@ public class WeaponsController {
         catch(WeaponsException e) {
             return ResponseEntity.badRequest()
                                  .body(String.format(
-                                         "Could not retrieve the weapon from the database",
+                                         "Could not retrieve the weapon from the database: %s",
                                          e.getMessage()));
         }
     }
