@@ -28,4 +28,14 @@ public class WeaponsServiceImpl implements WeaponsService {
 
         return createdWeapon.getId();
     }
+    
+    @Override
+    public WeaponEntity findWeapon(UUID identity) throws WeaponsException
+    {
+        try {
+            return weaponsRepository.findById(identity).get();
+        } catch(Exception e) {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+    }
 }

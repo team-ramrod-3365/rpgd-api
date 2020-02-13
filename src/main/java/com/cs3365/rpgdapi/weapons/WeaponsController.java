@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.net.URI;
 import java.util.UUID;
@@ -46,5 +49,19 @@ public class WeaponsController {
 
         return ResponseEntity.created(location)
                              .body("");
+    }
+    
+    @GetMapping("/{weaponID}")
+    public ResponseEntity get(@PathVariable("weaponID") UUID identifier)
+    {
+        try {
+            return new ResponseEntity<>(weaponsService.findWeapon(identifier), HttpStatus.OK);
+        }
+        catch(WeaponsException e) {
+            return ResponseEntity.badRequest()
+                                 .body(String.format(
+                                         "Could not retrieve the weapon from the database: %s",
+                                         e.getMessage()));
+        }
     }
 }
