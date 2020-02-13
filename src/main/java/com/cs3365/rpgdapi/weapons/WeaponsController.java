@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.net.URI;
@@ -63,5 +64,19 @@ public class WeaponsController {
                                          "Could not retrieve the weapon from the database: %s",
                                          e.getMessage()));
         }
+    }
+    @DeleteMapping("/{weaponID}")
+    public ResponseEntity delete(@PathVariable("weaponID") UUID identifier)
+    {
+        try {
+            weaponsService.removeWeapon(identifier);
+        }
+        catch (WeaponsException e) {
+            return ResponseEntity.badRequest()
+                                 .body(String.format(
+                                         "Could not delete the weapon from the database: %s",
+                                         e.getMessage()));
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
