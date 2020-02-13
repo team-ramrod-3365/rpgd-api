@@ -1,14 +1,9 @@
 package com.cs3365.rpgdapi.weapons;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.UUID;
@@ -64,4 +59,40 @@ public class WeaponsController {
                                          e.getMessage()));
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> put(@RequestBody Weapon requestBody,
+                                      @PathVariable UUID identity) throws WeaponsException {
+        try {
+            requestBody.validate();
+        } catch(WeaponsException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        WeaponEntity weapon = weaponsService.findWeapon(identity);
+        if (weapon == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        weapon.setName(requestBody.getName());
+        weapon.setType(requestBody.getType());
+        weapon.setDescription(requestBody.getDescription());
+        weapon.setAttackPower(requestBody.getAttackPower());
+        weapon.setAttackType(requestBody.getAttackType());
+        weapon.setSpecialAbility(requestBody.getSpecialAbility());
+        weapon.setWeight(requestBody.getWeight());
+
+        try {
+            weaponsService.updateWeapon(weapon);
+        } catch(WeaponsException e) {
+            return ResponseEntity.badRequest()
+                    .body(String.format(
+                            "There was an issue updating the weapon in the database: %s",
+                            e.getMessage()));
+        }
+
+        return ResponseEntity.ok().body("");
+    }
+
+
 }

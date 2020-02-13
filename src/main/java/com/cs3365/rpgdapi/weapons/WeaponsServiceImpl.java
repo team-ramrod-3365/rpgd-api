@@ -38,4 +38,14 @@ public class WeaponsServiceImpl implements WeaponsService {
             throw new WeaponsException(e.getMessage(), e.getCause());
         }
     }
+
+    @Override
+    public void updateWeapon(WeaponEntity weapon) throws WeaponsException {
+        try {
+            weaponsRepository.save(weapon);
+        } catch(Exception e) {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+    }
+
 }
