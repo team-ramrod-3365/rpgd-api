@@ -73,5 +73,17 @@ public class WeaponsServiceImpl implements WeaponsService {
         return updatedWeapon;
     }
 
+    @Override
+    public void removeWeapon(UUID identity) throws WeaponsException
+    {
+        try
+        {
+            weaponsRepository.deleteById(identity);
+        } 
+        catch(Exception e) 
+        {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+    }
 }
 

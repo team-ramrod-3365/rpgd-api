@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.net.URI;
 import java.util.UUID;
@@ -75,11 +77,26 @@ public class WeaponsController {
         } catch (WeaponsException e) {
             return ResponseEntity.badRequest()
                     .body(String.format(
-                            "There was an issue creating the weapon in the database: %s",
+                            "There was an issue updating the weapon in the database: %s",
                             e.getMessage()));
         }
 
         return new ResponseEntity<>(updatedWeapon, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/{weaponID}")
+    public ResponseEntity delete(@PathVariable("weaponID") UUID identifier)
+    {
+        try {
+            weaponsService.removeWeapon(identifier);
+        }
+        catch (WeaponsException e) {
+            return ResponseEntity.badRequest()
+                                 .body(String.format(
+                                         "Could not delete the weapon from the database: %s",
+                                         e.getMessage()));
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
