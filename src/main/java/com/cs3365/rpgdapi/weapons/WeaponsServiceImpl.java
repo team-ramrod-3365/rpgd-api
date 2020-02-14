@@ -40,12 +40,38 @@ public class WeaponsServiceImpl implements WeaponsService {
     }
 
     @Override
-    public void updateWeapon(WeaponEntity weapon) throws WeaponsException {
+    public WeaponEntity updateWeapon(Weapon weapon, UUID identifier) throws WeaponsException {
+
+        WeaponEntity weaponEntity;
+
         try {
-            weaponsRepository.save(weapon);
+            weaponEntity = weaponsRepository.findById(identifier).get();
         } catch(Exception e) {
             throw new WeaponsException(e.getMessage(), e.getCause());
         }
+
+        if (weaponEntity == null){
+            return null;
+        }
+
+        weaponEntity.setName(weapon.getName());
+        weaponEntity.setType(weapon.getType());
+        weaponEntity.setDescription(weapon.getDescription());
+        weaponEntity.setAttackPower(weapon.getAttackPower());
+        weaponEntity.setAttackType(weapon.getAttackType());
+        weaponEntity.setSpecialAbility(weapon.getSpecialAbility());
+        weaponEntity.setWeight(weapon.getWeight());
+
+        WeaponEntity updatedWeapon;
+
+        try {
+            updatedWeapon = weaponsRepository.save(weaponEntity);
+        } catch(Exception e) {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+
+        return updatedWeapon;
     }
 
 }
+

@@ -23,9 +23,9 @@ public class WeaponsController {
     public ResponseEntity<String> post(@RequestBody Weapon requestBody) {
         try {
             requestBody.validate();
-        } catch(WeaponsException e) {
+        } catch (WeaponsException e) {
             return ResponseEntity.badRequest()
-                                 .body(e.getMessage());
+                    .body(e.getMessage());
         }
 
         UUID weaponId;
@@ -33,66 +33,53 @@ public class WeaponsController {
 
         try {
             weaponId = weaponsService.createWeapon(requestBody);
-        } catch(WeaponsException e) {
+        } catch (WeaponsException e) {
             return ResponseEntity.badRequest()
-                                 .body(String.format(
-                                         "There was an issue creating the weapon in the database: %s",
-                                         e.getMessage()));
+                    .body(String.format(
+                            "There was an issue creating the weapon in the database: %s",
+                            e.getMessage()));
         }
 
         URI location = URI.create(String.format("%s/%s", baseUrl, weaponId.toString()));
 
         return ResponseEntity.created(location)
-                             .body("");
+                .body("");
     }
-    
+
     @GetMapping("/{weaponID}")
-    public ResponseEntity get(@PathVariable("weaponID") UUID identifier)
-    {
+    public ResponseEntity get(@PathVariable("weaponID") UUID identifier) {
         try {
             return new ResponseEntity<>(weaponsService.findWeapon(identifier), HttpStatus.OK);
-        }
-        catch(WeaponsException e) {
+        } catch (WeaponsException e) {
             return ResponseEntity.badRequest()
-                                 .body(String.format(
-                                         "Could not retrieve the weapon from the database: %s",
-                                         e.getMessage()));
+                    .body(String.format(
+                            "Could not retrieve the weapon from the database: %s",
+                            e.getMessage()));
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> put(@RequestBody Weapon requestBody,
-                                      @PathVariable UUID identity) throws WeaponsException {
+    @PutMapping("/{weaponID}")
+    public ResponseEntity put(@RequestBody Weapon requestBody,
+                              @PathVariable("weaponID") UUID identifier) {
+
         try {
             requestBody.validate();
         } catch(WeaponsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        WeaponEntity weapon = weaponsService.findWeapon(identity);
-        if (weapon == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        weapon.setName(requestBody.getName());
-        weapon.setType(requestBody.getType());
-        weapon.setDescription(requestBody.getDescription());
-        weapon.setAttackPower(requestBody.getAttackPower());
-        weapon.setAttackType(requestBody.getAttackType());
-        weapon.setSpecialAbility(requestBody.getSpecialAbility());
-        weapon.setWeight(requestBody.getWeight());
+        WeaponEntity updatedWeapon;
 
         try {
-            weaponsService.updateWeapon(weapon);
-        } catch(WeaponsException e) {
+            updatedWeapon = weaponsService.updateWeapon(requestBody, identifier);
+        } catch (WeaponsException e) {
             return ResponseEntity.badRequest()
                     .body(String.format(
-                            "There was an issue updating the weapon in the database: %s",
+                            "There was an issue creating the weapon in the database: %s",
                             e.getMessage()));
         }
 
-        return ResponseEntity.ok().body("");
+        return new ResponseEntity<>(updatedWeapon, HttpStatus.OK);
+
     }
-
-
 }

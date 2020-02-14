@@ -5,5 +5,5 @@ import java.util.UUID;
 public interface WeaponsService {
     UUID createWeapon(Weapon requestBody) throws WeaponsException;
     WeaponEntity findWeapon(UUID identity) throws WeaponsException;
-    void updateWeapon(WeaponEntity weapon) throws WeaponsException;
+    WeaponEntity updateWeapon(Weapon weapon, UUID identifier) throws WeaponsException;
 }
