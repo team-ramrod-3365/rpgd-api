@@ -19,7 +19,14 @@ public class WeaponsServiceImpl implements WeaponsService {
 
     @Override
     public UUID createWeapon(Weapon requestBody) throws WeaponsException {
-        WeaponEntity weapon = new WeaponEntity(requestBody);
+        WeaponEntity weapon = new WeaponEntity.WeaponEntityBuilder(requestBody.getName(), requestBody.getType())
+                .description(requestBody.getDescription())
+                .attackPower(requestBody.getAttackPower())
+                .attackType(requestBody.getAttackType())
+                .specialAbility(requestBody.getSpecialAbility())
+                .weight(requestBody.getWeight())
+                .build();
+
         WeaponEntity createdWeapon;
 
         try {
@@ -32,8 +39,7 @@ public class WeaponsServiceImpl implements WeaponsService {
     }
     
     @Override
-    public WeaponEntity findWeapon(UUID identity) throws WeaponsException
-    {
+    public WeaponEntity findWeapon(UUID identity) throws WeaponsException {
         try {
             return weaponsRepository.findById(identity).get();
         } catch(Exception e) {
@@ -56,13 +62,13 @@ public class WeaponsServiceImpl implements WeaponsService {
             return null;
         }
 
-        weaponEntity.setName(weapon.getName());
-        weaponEntity.setType(weapon.getType());
-        weaponEntity.setDescription(weapon.getDescription());
-        weaponEntity.setAttackPower(weapon.getAttackPower());
-        weaponEntity.setAttackType(weapon.getAttackType());
-        weaponEntity.setSpecialAbility(weapon.getSpecialAbility());
-        weaponEntity.setWeight(weapon.getWeight());
+        weaponEntity = new WeaponEntity.WeaponEntityBuilder(weapon.getName(), weapon.getType())
+                                       .description(weapon.getDescription())
+                                       .attackPower(weapon.getAttackPower())
+                                       .attackType(weapon.getAttackType())
+                                       .specialAbility(weapon.getSpecialAbility())
+                                       .weight(weapon.getWeight())
+                                       .build();
 
         WeaponEntity updatedWeapon;
 
@@ -76,14 +82,11 @@ public class WeaponsServiceImpl implements WeaponsService {
     }
 
     @Override
-    public void removeWeapon(UUID identity) throws WeaponsException
-    {
-        try
-        {
+    public void removeWeapon(UUID identity) throws WeaponsException {
+        try {
             weaponsRepository.deleteById(identity);
         } 
-        catch(Exception e) 
-        {
+        catch(Exception e) {
             throw new WeaponsException(e.getMessage(), e.getCause());
         }
     }

@@ -24,7 +24,7 @@ public class WeaponsServiceImplTests {
     public void shouldSucceed() throws Exception {
         // Given
         Weapon weapon = new Weapon.WeaponBuilder("Test Weapon", "sword").build();
-        WeaponEntity weaponEntity = new WeaponEntity(weapon);
+        WeaponEntity weaponEntity = new WeaponEntity.WeaponEntityBuilder(weapon.getName(), weapon.getType()).build();
         Mockito.when(mockWeaponsRepository.save(Mockito.any())).thenReturn(weaponEntity);
 
         // When
