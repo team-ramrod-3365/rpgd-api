@@ -1,4 +1,4 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.controllers;
 
 public class WeaponsException extends Exception {
 

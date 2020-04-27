@@ -1,5 +1,7 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.controllers;
 
+import com.cs3365.rpgdapi.models.Weapon;
+import com.cs3365.rpgdapi.models.WeaponEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

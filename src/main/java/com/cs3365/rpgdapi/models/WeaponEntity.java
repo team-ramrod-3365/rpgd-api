@@ -1,4 +1,4 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

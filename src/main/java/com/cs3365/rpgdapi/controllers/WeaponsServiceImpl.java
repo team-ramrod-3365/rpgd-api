@@ -1,5 +1,7 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.controllers;
 
+import com.cs3365.rpgdapi.models.Weapon;
+import com.cs3365.rpgdapi.models.WeaponEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
