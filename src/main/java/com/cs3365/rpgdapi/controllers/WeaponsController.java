@@ -88,8 +88,7 @@ public class WeaponsController {
     }
 
     @DeleteMapping("/{weaponID}")
-    public ResponseEntity delete(@PathVariable("weaponID") UUID identifier)
-    {
+    public ResponseEntity delete(@PathVariable("weaponID") UUID identifier) {
         try {
             weaponsService.removeWeapon(identifier);
         }
