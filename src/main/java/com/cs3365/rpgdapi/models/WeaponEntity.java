@@ -1,4 +1,4 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,14 +24,14 @@ public class WeaponEntity {
 
     public WeaponEntity() {}
 
-    public WeaponEntity(Weapon weapon) {
-        this.name = weapon.getName();
-        this.type = weapon.getType();
-        this.description = weapon.getDescription();
-        this.attackPower = weapon.getAttackPower();
-        this.attackType = weapon.getAttackType();
-        this.specialAbility = weapon.getSpecialAbility();
-        this.weight = weapon.getWeight();
+    private WeaponEntity(WeaponEntityBuilder builder) {
+        this.name = builder.name;
+        this.type = builder.type;
+        this.description = builder.description;
+        this.attackPower = builder.attackPower;
+        this.attackType = builder.attackType;
+        this.specialAbility = builder.specialAbility;
+        this.weight = builder.weight;
     }
 
     public UUID getId() {
@@ -96,5 +96,50 @@ public class WeaponEntity {
 
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public static class WeaponEntityBuilder {
+
+        private String name;
+        private String type;
+        private String description;
+        private Double attackPower;
+        private String attackType;
+        private String specialAbility;
+        private Double weight;
+
+        public WeaponEntityBuilder(String name, String type) {
+            this.name = name;
+            this.type = type;
+        }
+
+        public WeaponEntityBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public WeaponEntityBuilder attackPower(Double attackPower) {
+            this.attackPower = attackPower;
+            return this;
+        }
+
+        public WeaponEntityBuilder attackType(String attackType) {
+            this.attackType = attackType;
+            return this;
+        }
+
+        public WeaponEntityBuilder specialAbility(String specialAbility) {
+            this.specialAbility = specialAbility;
+            return this;
+        }
+
+        public WeaponEntityBuilder weight(Double weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public WeaponEntity build() {
+            return new WeaponEntity(this);
+        }
     }
 }

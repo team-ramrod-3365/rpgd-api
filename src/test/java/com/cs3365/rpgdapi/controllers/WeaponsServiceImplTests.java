@@ -1,5 +1,7 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.controllers;
 
+import com.cs3365.rpgdapi.models.Weapon;
+import com.cs3365.rpgdapi.models.WeaponEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,7 +24,7 @@ public class WeaponsServiceImplTests {
     public void shouldSucceed() throws Exception {
         // Given
         Weapon weapon = new Weapon.WeaponBuilder("Test Weapon", "sword").build();
-        WeaponEntity weaponEntity = new WeaponEntity(weapon);
+        WeaponEntity weaponEntity = new WeaponEntity.WeaponEntityBuilder(weapon.getName(), weapon.getType()).build();
         Mockito.when(mockWeaponsRepository.save(Mockito.any())).thenReturn(weaponEntity);
 
         // When

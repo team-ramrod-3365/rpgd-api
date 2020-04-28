@@ -1,5 +1,6 @@
-package com.cs3365.rpgdapi.weapons;
+package com.cs3365.rpgdapi.controllers;
 
+import com.cs3365.rpgdapi.models.WeaponEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
