@@ -166,7 +166,7 @@ Date: Fri, 14 Feb 2020 03:53:22 GMT
   - Git
 
 ## Dev Environment
-Once you have Docker and OpenJDK installed run the command `bash bootstrap_dev.sh` to setup your dev environment. After that has finished running, you can run make docker-up to start the application in the foreground or `docker-compose up -d` to run it in the background. You can see all running Docker containers with the comand `docker ps`.
+Once you have Docker and OpenJDK installed, create a `.env` file in the project directory, add `DB_PASSWORD=<password>` to the file, and run the command `bash bootstrap_dev.sh` to setup your dev environment. After that has finished running, you can run make docker-up to start the application in the foreground or `docker-compose up -d` to run it in the background. You can see all running Docker containers with the comand `docker ps`.
 
 If you would prefer not to run the application in Docker you will still need a local PostgreSQL database. The application is configured to use the following environment variables to connect to the database, and they will need to be set in order for it to run properly: `DB_CONNECTION_STRING`, `DB_USER`, and `DB_PASSWORD`.
 

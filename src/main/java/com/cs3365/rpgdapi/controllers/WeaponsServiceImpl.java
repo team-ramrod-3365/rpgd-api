@@ -5,6 +5,8 @@ import com.cs3365.rpgdapi.models.WeaponEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -85,10 +87,22 @@ public class WeaponsServiceImpl implements WeaponsService {
     public void removeWeapon(UUID identity) throws WeaponsException {
         try {
             weaponsRepository.deleteById(identity);
-        } 
-        catch(Exception e) {
+        } catch(Exception e) {
             throw new WeaponsException(e.getMessage(), e.getCause());
         }
+    }
+
+    @Override
+    public List<WeaponEntity> findWeapons() throws WeaponsException {
+        List<WeaponEntity> weapons = new ArrayList<>();
+
+        try {
+            weaponsRepository.findAll().forEach(weapons::add);
+        } catch(Exception e) {
+            throw new WeaponsException(e.getMessage(), e.getCause());
+        }
+
+        return weapons;
     }
 }
 

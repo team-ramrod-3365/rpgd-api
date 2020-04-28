@@ -4,6 +4,8 @@ services:
   rpgd-db:
     image: postgres:12-alpine
     container_name: rpgd-db-dev
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -15,11 +17,22 @@ services:
     container_name: rpgd-api
     environment:
       - DB_USER=postgres
+      - DB_PASSWORD
       - DB_CONNECTION_STRING=jdbc:postgresql://rpgd-db-dev:5432/rpgd-dev
+    ports:
+      - "8090:8090"
+    depends_on:
+      - rpgd-db
+
+  rpgd-ui:
+    build: ./src/views
+    image: rpgd-ui:latest
+    container_name: rpgd-ui
     ports:
       - "8080:8080"
     depends_on:
       - rpgd-db
+      - rpgd-api
 
 volumes:
   rpgd-db-vol:

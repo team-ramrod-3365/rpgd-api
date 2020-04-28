@@ -34,3 +34,6 @@ bin/
 
 ### Mac ###
 .DS_Store
+
+### Docker Compose ###
+.env
